@@ -11,7 +11,6 @@ import net.thucydides.core.annotations.Steps;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
-import serenityswag.authentication.actions.LoginActions;
 import serenityswag.inventory.InventoryPage;
 
 @ExtendWith(SerenityJUnit5Extension.class)

@@ -3,6 +3,7 @@ package serenityswag.inventory;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import java.util.List;
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import serenityswag.authentication.User;
-import serenityswag.authentication.actions.LoginActions;
+import serenityswag.authentication.LoginActions;
 
 
 @ExtendWith(SerenityJUnit5Extension.class)
@@ -23,9 +24,12 @@ public class WhenViewingHighlightedProducts {
   @Steps
   LoginActions login;
 
-  ProductListPageObject productList;
+  @Steps
+  ViewProductDetailsActions viewProductDetails;
 
-  ProductDetailsPageObject productDetails;
+  ProductList productList;
+
+  ProductDetails productDetails;
 
   @Test
   public void shouldDisplayHighlightedProductsOnWelcomePage() {
@@ -52,12 +56,15 @@ public class WhenViewingHighlightedProducts {
   @Test
   public void shouldDisplayCorrectDisplayPage() {
     login.as(User.STANDARD_USER);
-
     String firstItemName = productList.titles().get(0);
-    productList.openProductDetailsFor(firstItemName);
+    viewProductDetails.forProductWithName(firstItemName);
 
-    assertThat(productDetails.productName()).isEqualTo(firstItemName);
-    productDetails.productImageWIthAltValueOf(firstItemName).shouldBeCurrentlyVisible();
+    Serenity.reportThat("The product name should be correctly displayed",
+        () -> assertThat(productDetails.productName()).isEqualTo(firstItemName)
+    );
+    Serenity.reportThat("Product image should have the correct alt text",
+        () -> productDetails.productImageWIthAltValueOf(firstItemName).shouldBeCurrentlyVisible()
+    );
   }
 
 }

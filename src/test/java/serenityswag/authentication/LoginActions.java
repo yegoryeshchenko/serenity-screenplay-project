@@ -1,9 +1,7 @@
-package serenityswag.authentication.actions;
+package serenityswag.authentication;
 
 import net.serenitybdd.core.steps.UIInteractions;
 import net.thucydides.core.annotations.Step;
-import org.openqa.selenium.By;
-import serenityswag.authentication.User;
 
 public class LoginActions extends UIInteractions {
 
@@ -13,8 +11,8 @@ public class LoginActions extends UIInteractions {
 
 //    login standard user
 
-    $("#user-name").sendKeys(user.getUsername());
-    $("#password").sendKeys(user.getPassword());
-    $("#login-button").click();
+    find(LoginForm.USER_NAME).type(user.getUsername());
+    find(LoginForm.PASSWORD).type(user.getPassword());
+    find(LoginForm.LOGIN_BUTTON).click();
   }
 }
