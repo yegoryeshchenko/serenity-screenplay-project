@@ -42,6 +42,7 @@ public class WhenAddingAnItemToTheCart {
     Serenity.reportThat("The shopping cart should be '1'",
         () -> assertThat(shoppingCartBadge.badgeCount()).isEqualTo("1")
     );
+    assertThat(shoppingCartBadge.badgeCount()).isEqualTo("1");
   }
 
   ProductList productList;
@@ -65,6 +66,8 @@ public class WhenAddingAnItemToTheCart {
         () ->
             assertThat(cart.displayedItems()).containsExactlyElementsOf(selectedItems)
             .isEqualTo(selectedItems));
+    assertThat(cart.displayedItems()).containsExactlyElementsOf(selectedItems)
+        .isEqualTo(selectedItems);
   }
 
   private List<String> firstThreeProductTitlesDisplayed() {
