@@ -28,6 +28,9 @@ public class WhenLoggingOn extends UIInteractionSteps {
   public void usersCanLogOnViaTheHomePage() {
     login.as(STANDARD_USER);
 
+    Serenity.recordReportData().withTitle("user credentials")
+        .andContents("User: " + STANDARD_USER);
+
     // Should see Product catalog
     Serenity.reportThat("Inventory page should be displayed with the correct title",
         () -> assertThat(inventory.getHeading()).isEqualToIgnoringCase("Products")

@@ -65,9 +65,24 @@ public class WhenAddingAnItemToTheCart {
     Serenity.reportThat("Should see all of the items listed",
         () ->
             assertThat(cart.displayedItems()).containsExactlyElementsOf(selectedItems)
-            .isEqualTo(selectedItems));
-    assertThat(cart.displayedItems()).containsExactlyElementsOf(selectedItems)
-        .isEqualTo(selectedItems);
+                .isEqualTo(selectedItems));
+  }
+
+  CartPageObject cartPage;
+
+  @Test
+  public void pricesForEachItemShouldBeShownInTheCart() {
+    //    add the items to the shopping cart
+    cart.addItems(firstThreeProductTitlesDisplayed());
+
+    //    open the cart page
+    cartPage.open();
+    //    check that each item in the cart has their price
+    List<CartItem> items = cartPage.items();
+
+    assertThat(items).hasSize(3)
+        .allMatch(item -> item.getPrice() > 0.0)
+        .allMatch(item -> !item.getDescription().isEmpty());
   }
 
   private List<String> firstThreeProductTitlesDisplayed() {
